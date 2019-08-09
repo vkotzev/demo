@@ -2,6 +2,7 @@ package io.pivotal.microservices.services.web;
 
 import io.pivotal.microservices.services.web.Account;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -55,6 +56,16 @@ public class WebAccountsController {
 		logger.info("web-service byNumber() found: " + account);
 		model.addAttribute("account", account);
 		return "account";
+	}
+	
+	@RequestMapping("/valeri")
+	public String accountValeri(Model model) {
+		Account accValeri = new Account();
+		accValeri.setId(205);
+		accValeri.setNumber("111 222 333 444");
+		accValeri.setBalance(new BigDecimal("19567977777888989183"));
+		model.addAttribute("valeri", accValeri);
+		return "valeri";
 	}
 
 	@RequestMapping("/accounts/owner/{text}")

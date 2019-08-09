@@ -25,10 +25,8 @@ server.port: 3333   # HTTP (Tomcat) port
 #  2. Define URL of registration server (defaultZone)
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:1111/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    registerWithEureka: false
+    fetchRegistry: false
 
 # Enable actuator access without security checks - DEVELOPEMENT ONLY
 # management.security.enabled: false   Spring Boot 1.5 property

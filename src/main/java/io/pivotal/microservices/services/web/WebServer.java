@@ -73,4 +73,10 @@ public class WebServer {
 	public HomeController homeController() {
 		return new HomeController();
 	}
+	
+	@Bean
+	public EmployeeConfig employeeConfig() {
+		return new EmployeeConfig();
+	}
+
 }

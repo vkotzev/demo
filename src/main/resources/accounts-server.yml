@@ -20,10 +20,8 @@ server.port: 2222   # HTTP (Tomcat) port
 #  2. Define URL of registration server (defaultZone)
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:1111/eureka/
-  instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    registerWithEureka: false
+    fetchRegistry: false
 
 #  3. If using the Angel release-train ONLY, give the process a unique instance id 
 #     so that multiple instances can register when running on SAME host.  This is

@@ -1,35 +1,31 @@
 package io.pivotal.microservices.services.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Employee {
 	
-	private long id;
+	private String id;
 	private String egn;
-	private String name;
-	private String family;
-	private ArrayList<String> team;
+	private String firstName;
+	private String lastName;
+	private List<String> addresses = new ArrayList<>();
 	
 	public Employee() {
-		this.id = 5;
+		this.id = "5";
 		this.egn = "7777777777";
-		this.name = "Valeri";
-		this.family = "Kotsev";
-		team = new ArrayList<String>();
-		team.add("Djako Bokanako 1");
-		team.add("Djako Bokanako 2");
-		team.add("Djako Bokanako 3");
-		team.add("Djako Bokanako 4");
-		team.add("Djako Bokanako 5");
-		team.add("Djako Bokanako 6");
-		team.add("Djako Bokanako 7");
+		this.firstName = "Valeri";
+		this.lastName = "Kotsev";
+		addresses.add("ValKot Address 1");
+		addresses.add("ValKot Address 22");
+		addresses.add("ValKot Address 333");
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -41,27 +37,28 @@ public class Employee {
 		this.egn = egn;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getFamily() {
-		return family;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setFamily(String family) {
-		this.family = family;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public ArrayList<String> getTeam() {
-		return team;
+	public List<String> getAddresses() {
+		return addresses;
 	}
 
-	public void setTeam(ArrayList<String> team) {
-		this.team = team;
+	public void setAddresses(List<String> addresses) {
+		this.addresses = addresses;
 	}
+
 }

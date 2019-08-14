@@ -68,11 +68,6 @@ public class WebServer {
 	public WebAccountsController accountsController() {
 		return new WebAccountsController(accountsService());
 	}
-
-	@Bean
-	public HomeController homeController() {
-		return new HomeController();
-	}
 	
 	@Bean
 	public EmployeeConfig employeeConfig() {

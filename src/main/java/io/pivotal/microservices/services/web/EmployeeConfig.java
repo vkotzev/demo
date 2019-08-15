@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +47,8 @@ public class EmployeeConfig {
 		return new Employee();
 	}
 	
-    @RequestMapping("/create")
-    public String create() throws IOException {
+    @RequestMapping("/create2")
+    public String create2() throws IOException {
     	RestHighLevelClient client = Config.client();
     	String id = UUID.randomUUID().toString();
     	
@@ -70,21 +71,37 @@ public class EmployeeConfig {
         return response.getResult().toString();
     }
     
+    @PostMapping("/create")
+    public String create(@RequestBody Employee employee) throws IOException {
+    	RestHighLevelClient client = Config.client();
+    	String id = UUID.randomUUID().toString();
+		
+		Map<String, Object> employeeMapper = objectMapper.convertValue(employee, Map.class);
+		
+		IndexRequest request = new IndexRequest("employees", "NT", id).source(employeeMapper);
+        IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+        
+        return response.getResult().toString();
+    }
+    
     @GetMapping("/read/{id}")
     public Employee readById(@PathVariable String id) throws IOException {
     	RestHighLevelClient client = Config.client();
+    	
     	GetRequest getRequest = new GetRequest("employees", "NT", id);
     	GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
+    	
         Map<String, Object> employeeMap = getResponse.getSource();
         
         return objectMapper.convertValue(employeeMap, Employee.class);
     }
     
-    @PutMapping("/update")
-    public String update(@RequestBody Employee employee) throws IOException {
+    @PutMapping("/update/{id}")
+    public String update(@PathVariable String id, @RequestBody Employee employee) throws IOException {
     	RestHighLevelClient client = Config.client();
-    	Employee resultEmployee = readById(employee.getId());
-    	UpdateRequest updateRequest = new UpdateRequest("employees", "NT", resultEmployee.getId());
+    	Employee resultEmployee = readById(id);
+    	
+    	UpdateRequest updateRequest = new UpdateRequest("employees", "NT", id);
     	Map<String, Object> employeeMapper =  objectMapper.convertValue(employee, Map.class);
     	updateRequest.doc(employeeMapper);
     	UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
@@ -95,6 +112,7 @@ public class EmployeeConfig {
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable String id) throws IOException {
     	RestHighLevelClient client = Config.client();
+    	
     	DeleteRequest deleteRequest = new DeleteRequest("employees", "NT", id);
         DeleteResponse response = client.delete(deleteRequest, RequestOptions.DEFAULT);
 
